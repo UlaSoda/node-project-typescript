@@ -9,7 +9,12 @@ export class HelloController {
   }
 
   public getHello = (req: Request, res: Response): void => {
-    const message = this.helloService.getHelloMessage();
+    const { name } = req.body;
+    if (!name) {
+      res.status(400).json({ message: 'Name is required' });
+      return;
+    }
+    const message = this.helloService.getHelloMessage(name);
     res.json(message);
   }
 }

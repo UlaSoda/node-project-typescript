@@ -4,7 +4,8 @@ import { HelloController } from '../controllers/helloController';
 const router = Router();
 const helloController = new HelloController();
 
-router.get('/', helloController.getHello);
+// 使用 POST 路由來接收 name
+router.post('/', helloController.getHello);
 
 export default router;
 
