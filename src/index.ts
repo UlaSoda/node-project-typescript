@@ -2,6 +2,15 @@ import express, { Request, Response } from 'express';
 import helloRoutes from './routes/helloRoutes';
 import productRoutes from './routes/productRoutes';
 import { setupSwagger } from './swagger';
+import sequelize from './config/database';
+import dotenv from 'dotenv';
+
+// 指定 .env 文件的路径
+dotenv.config({ path: './config/.env' });
+
+// 调试路径和环境变量
+console.log('Working directory:', process.cwd());
+console.log('DB_SERVER:', process.env.DB_SERVER);
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -23,6 +32,17 @@ app.get('/', (req, res) => {
   res.redirect('/api-docs');
 });
 
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-});
+// 同步数据库
+sequelize.sync()  // `force: true` 会先删除已存在的表，然后再创建
+// sequelize.sync({ force: true })  // `force: true` 会先删除已存在的表，然后再创建
+  .then(() => {
+    console.log('Database & tables created!');
+    app.listen(port, () => {
+      console.log(`Server is running on port ${port}`);
+    });
+  })
+  .catch(err => {
+    console.error('Unable to sync database:', err);
+  });
+
+

@@ -1,52 +1,66 @@
 import { Request, Response } from 'express';
-import { ProductService } from '../services/productService';
-
-export class ProductController {
-  private productService: ProductService;
-
-  constructor() {
-    this.productService = new ProductService();
-  }
-
-  public getAllProducts = (req: Request, res: Response): void => {
-    const products = this.productService.getAllProducts();
+import productService from '../services/productService';
+const getAllProducts = async (req: Request, res: Response) => {
+  try {
+    const products = await productService.getAllProducts();
     res.json(products);
+  } catch (err) {
+    res.status(500).json({ error: (err as Error).message || 'An unknown error occurred' });
   }
+};
 
-  public getProductById = (req: Request, res: Response): void => {
-    const id = parseInt(req.params.id);
-    const product = this.productService.getProductById(id);
+const getProductById = async (req: Request, res: Response) => {
+  try {
+    const product = await productService.getProductById(parseInt(req.params.id, 10));
     if (product) {
       res.json(product);
     } else {
       res.status(404).json({ message: 'Product not found' });
     }
+  } catch (err) {
+    res.status(500).json({ error: (err as Error).message || 'An unknown error occurred' });
   }
+};
 
-  public createProduct = (req: Request, res: Response): void => {
-    const product = req.body;
-    const newProduct = this.productService.createProduct(product);
-    res.status(201).json(newProduct);
+const createProduct = async (req: Request, res: Response) => {
+  try {
+    const product = await productService.createProduct(req.body);
+    res.status(201).json(product);
+  } catch (err) {
+    res.status(400).json({ error: (err as Error).message || 'An unknown error occurred' });
   }
+};
 
-  public updateProduct = (req: Request, res: Response): void => {
-    const id = parseInt(req.params.id);
-    const product = req.body;
-    const updatedProduct = this.productService.updateProduct(id, product);
-    if (updatedProduct) {
-      res.json(updatedProduct);
+const updateProduct = async (req: Request, res: Response) => {
+  try {
+    const product = await productService.updateProduct(parseInt(req.params.id, 10), req.body);
+    if (product) {
+      res.json(product);
     } else {
       res.status(404).json({ message: 'Product not found' });
     }
+  } catch (err) {
+    res.status(400).json({ error: (err as Error).message || 'An unknown error occurred' });
   }
+};
 
-  public deleteProduct = (req: Request, res: Response): void => {
-    const id = parseInt(req.params.id);
-    const success = this.productService.deleteProduct(id);
+const deleteProduct = async (req: Request, res: Response) => {
+  try {
+    const success = await productService.deleteProduct(parseInt(req.params.id, 10));
     if (success) {
-      res.status(204).send();
+      res.status(204).end();
     } else {
       res.status(404).json({ message: 'Product not found' });
     }
+  } catch (err) {
+    res.status(500).json({ error: (err as Error).message || 'An unknown error occurred' });
   }
-}
+};
+
+export default {
+  getAllProducts,
+  getProductById,
+  createProduct,
+  updateProduct,
+  deleteProduct,
+};

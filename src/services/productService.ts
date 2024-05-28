@@ -1,29 +1,35 @@
-import { Product, ProductModel } from '../models/productModel';
+import Product from '../models/productModel';
 
-export class ProductService {
-  private productModel: ProductModel;
-
-  constructor() {
-    this.productModel = new ProductModel();
+class ProductService {
+  async getAllProducts() {
+    return await Product.findAll();
   }
 
-  getAllProducts(): Product[] {
-    return this.productModel.getAll();
+  async getProductById(id: number) {
+    return await Product.findByPk(id);
   }
 
-  getProductById(id: number): Product | undefined {
-    return this.productModel.getById(id);
+  async createProduct(data: Product) {
+    return await Product.create(data);
   }
 
-  createProduct(product: Omit<Product, 'id'>): Product {
-    return this.productModel.create(product);
+  async updateProduct(id: number, data: { name?: string; description?: string; price?: number }) {
+    const product = await Product.findByPk(id);
+    if (product) {
+      await product.update(data);
+      return product;
+    }
+    return null;
   }
 
-  updateProduct(id: number, product: Omit<Product, 'id'>): Product | undefined {
-    return this.productModel.update(id, product);
-  }
-
-  deleteProduct(id: number): boolean {
-    return this.productModel.delete(id);
+  async deleteProduct(id: number) {
+    const product = await Product.findByPk(id);
+    if (product) {
+      await product.destroy();
+      return true;
+    }
+    return false;
   }
 }
+
+export default new ProductService();
