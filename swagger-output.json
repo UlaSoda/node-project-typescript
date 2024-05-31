@@ -1,0 +1,290 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Sample API",
+    "description": "Description",
+    "version": "1.0.0"
+  },
+  "host": "localhost:3000",
+  "basePath": "/",
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/api/products/productspages": {
+      "get": {
+        "tags": [
+          "Product"
+        ],
+        "description": "分頁顯示Products",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "number",
+                    "example": 18
+                  },
+                  "name": {
+                    "type": "string",
+                    "example": "Product 2"
+                  },
+                  "description": {
+                    "type": "string",
+                    "example": "Description for Product 2"
+                  },
+                  "price": {
+                    "type": "number",
+                    "example": 20.99
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/products/{id}": {
+      "get": {
+        "tags": [
+          "Product"
+        ],
+        "description": "取得指定Product",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Product"
+        ],
+        "description": "更新指定Product",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Product"
+        ],
+        "description": "刪除指定Product",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/products/": {
+      "get": {
+        "tags": [
+          "Product"
+        ],
+        "description": "取得所有Product",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "number",
+                    "example": 18
+                  },
+                  "name": {
+                    "type": "string",
+                    "example": "Product 2"
+                  },
+                  "description": {
+                    "type": "string",
+                    "example": "Description for Product 2"
+                  },
+                  "price": {
+                    "type": "number",
+                    "example": 20.99
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Product"
+        ],
+        "description": "新增Product",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Some description...",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "John Doe"
+                },
+                "description": {
+                  "type": "string",
+                  "example": "Description for Product 2"
+                },
+                "price": {
+                  "type": "number",
+                  "example": 10
+                }
+              },
+              "required": [
+                "name",
+                "description",
+                "price"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "number",
+                  "example": 18
+                },
+                "name": {
+                  "type": "string",
+                  "example": "Product 2"
+                },
+                "description": {
+                  "type": "string",
+                  "example": "Description for Product 2"
+                },
+                "price": {
+                  "type": "number",
+                  "example": 20.99
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            },
+            "description": "User registered successfully."
+          },
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Product": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 19
+          },
+          "name": {
+            "type": "string",
+            "example": "Product 2"
+          },
+          "description": {
+            "type": "string",
+            "example": "Description for Product 2"
+          },
+          "price": {
+            "type": "number",
+            "format": "float",
+            "example": 20.99
+          }
+        }
+      }
+    }
+  },
+  "apis": [
+    "./src/routes/productRoutes.ts"
+  ]
+}

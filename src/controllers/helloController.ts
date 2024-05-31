@@ -9,6 +9,7 @@ export class HelloController {
   }
 
   public getHello = (req: Request, res: Response): void => {
+    // #swagger.ignore = true
     const { name } = req.body;
     if (!name) {
       res.status(400).json({ message: 'Name is required' });

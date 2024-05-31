@@ -1,5 +1,5 @@
-import { Model, DataTypes } from 'sequelize';
-import sequelize from '../config/database';
+import { Model, DataTypes } from "sequelize";
+import sequelize from "../config/database";
 
 interface ProductAttributes {
   id: number;
@@ -36,8 +36,8 @@ Product.init(
   },
   {
     sequelize,
-    modelName: 'Product',
-    tableName: 'Products', // 与数据库中的表名称对应
+    modelName: "Product",
+    tableName: "Products", // 与数据库中的表名称对应
     timestamps: false,
   }
 );

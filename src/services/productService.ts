@@ -1,8 +1,15 @@
-import Product from '../models/productModel';
+import Product from "../models/productModel";
 
 class ProductService {
   async getAllProducts() {
     return await Product.findAll();
+  }
+
+  async getProductsPages(offset: number, limit: number) {
+    return await Product.findAndCountAll({
+      offset: offset,
+      limit: limit,
+    });
   }
 
   async getProductById(id: number) {
@@ -13,7 +20,10 @@ class ProductService {
     return await Product.create(data);
   }
 
-  async updateProduct(id: number, data: { name?: string; description?: string; price?: number }) {
+  async updateProduct(
+    id: number,
+    data: { name?: string; description?: string; price?: number }
+  ) {
     const product = await Product.findByPk(id);
     if (product) {
       await product.update(data);
