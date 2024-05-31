@@ -1,0 +1,35 @@
+<%- include('layout') %>
+
+<% title = 'Express App' %> <!-- 设置页面标题 -->
+<script>
+  $(document).ready(function() {
+      $('#dataTable').DataTable({
+          // 这里可以添加 DataTables.js 的配置选项
+      });
+  });
+</script>
+<!-- 页面内容 -->
+<h1>Welcome to <%= title %></h1>
+<div>
+    <!-- 这里是 DataTable.js 的表格 -->
+    <table id="dataTable">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Description</th>
+          <th>Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% listData.forEach(item => { %>
+          <tr>
+            <td><%= item.id %></td>
+            <td><%= item.name %></td>
+            <td><%= item.description %></td>
+            <td><%= item.price %></td>
+          </tr>
+        <% }); %>
+      </tbody>
+    </table>
+</div>

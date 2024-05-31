@@ -23,9 +23,13 @@
     "typescript": "^5.4.5"
   },
   "dependencies": {
+    "axios": "^1.7.2",
     "dotenv": "^16.4.5",
+    "ejs": "^3.1.10",
+    "ejs-mate": "^4.0.0",
     "express": "^4.19.2",
     "express-jsdoc-swagger": "^1.8.0",
+    "reflect-metadata": "^0.2.2",
     "sequelize": "^6.37.3",
     "swagger-express-ts": "^1.1.0",
     "swagger-jsdoc": "^6.2.8",
