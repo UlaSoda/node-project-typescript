@@ -1,6 +1,7 @@
-import { Sequelize } from 'sequelize';
+import { Sequelize } from 'sequelize-typescript';
 import dotenv from 'dotenv';
-
+import Product from "../models/productModel";
+import Company from '../models/companyModel';
 // 确保在其他代码之前尽早加载 .env 文件
 dotenv.config({ path: './config/.env' });
 
@@ -20,6 +21,7 @@ const sequelize = new Sequelize(
         encrypt: true, // Use this if you're on Windows Azure
       },
     },
+    models: [Product, Company], // 確保所有模型都添加到這裡
   }
 );
 

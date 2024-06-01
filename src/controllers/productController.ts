@@ -11,6 +11,16 @@ const getAllProducts = async (req: Request, res: Response) => {
       .json({ error: (err as Error).message || "An unknown error occurred" });
   }
 };
+const getAllProductCompany = async (req: Request, res: Response) => {
+  try {
+    const products = await productService.getAllProductCompany();
+    res.json(products);
+  } catch (err) {
+    res
+      .status(500)
+      .json({ error: (err as Error).message || "An unknown error occurred" });
+  }
+};
 const getAllProductsPages = async (req: Request, res: Response) => {
   try {
     const page = parseInt(req.query.page as string, 10) || 1;
@@ -99,6 +109,7 @@ const deleteProduct = async (req: Request, res: Response) => {
 };
 
 export default {
+  getAllProductCompany,
   getAllProducts,
   getAllProductsPages,
   getProductById,

@@ -21,13 +21,19 @@ router.get(
    */
   productController.getAllProductsPages
 );
+router.get(
+  "/getallproductcompany",
 
+  productController.getAllProductCompany
+);
 router.get(
   "/:id",
   /* 	#swagger.tags = ['Product']
         #swagger.description = '取得指定Product' */
   productController.getProductById
 );
+
+
 router.get(
   "/",
   /* 	#swagger.tags = ['Product']

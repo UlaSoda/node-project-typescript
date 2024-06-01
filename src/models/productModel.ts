@@ -1,45 +1,30 @@
-import { Model, DataTypes } from "sequelize";
-import sequelize from "../config/database";
+import { Table, Column, Model, PrimaryKey, ForeignKey, BelongsTo } from 'sequelize-typescript';
+import Company from '../models/companyModel';
+import { INTEGER, STRING } from 'sequelize';
 
-interface ProductAttributes {
-  id: number;
-  name: string;
-  description: string;
-  price: number;
+@Table({
+  timestamps: false, // 禁用 createdAt 和 updatedAt
+})
+export default class Product extends Model<Product> {
+  @PrimaryKey
+  @Column({
+    field: 'name', // 資料表欄位名稱
+  })
+  name!: string;
+
+  @Column
+  description!: string;
+
+  @Column
+  price!: number;
+
+  @ForeignKey(() => Company)
+  @Column({
+    type: STRING,
+    allowNull: true, // 外鍵允許為 null
+  })
+  company!: string;
+
+  @BelongsTo(() => Company)
+  companyDetails!: Company;
 }
-
-class Product extends Model<ProductAttributes> implements ProductAttributes {
-  public id!: number;
-  public name!: string;
-  public description!: string;
-  public price!: number;
-}
-
-Product.init(
-  {
-    id: {
-      type: DataTypes.INTEGER,
-      autoIncrement: true,
-      primaryKey: true,
-    },
-    name: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    description: {
-      type: DataTypes.STRING,
-    },
-    price: {
-      type: DataTypes.FLOAT,
-      allowNull: false,
-    },
-  },
-  {
-    sequelize,
-    modelName: "Product",
-    tableName: "Products", // 与数据库中的表名称对应
-    timestamps: false,
-  }
-);
-
-export default Product;

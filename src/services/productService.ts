@@ -1,17 +1,19 @@
 import Product from "../models/productModel";
+import { getProductCompany } from '../viewmodel/ProductCompanyViewModel';
 
 class ProductService {
   async getAllProducts() {
     return await Product.findAll();
   }
-
   async getProductsPages(offset: number, limit: number) {
     return await Product.findAndCountAll({
       offset: offset,
       limit: limit,
     });
   }
-
+  async getAllProductCompany() {
+    return await getProductCompany();
+  }
   async getProductById(id: number) {
     return await Product.findByPk(id);
   }

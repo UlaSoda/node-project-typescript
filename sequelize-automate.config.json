@@ -1,0 +1,17 @@
+{
+    "dbOptions": {
+      "database": "Demo",
+      "username": "sa",
+      "password": "1qaz@WSX",
+      "dialect": "mssql",
+      "host": "localhost",
+      "port": 1433,
+      "logging": false
+    },
+    "options": {
+      "type": "ts",
+      "dir": "models",
+      "tableName": "Products"
+
+    }
+  }
